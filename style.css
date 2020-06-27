@@ -1,0 +1,15 @@
+.card {
+width: 30vw
+}
+
+.card .card-content p{
+    margin-top: 1rem
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
