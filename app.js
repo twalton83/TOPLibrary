@@ -49,6 +49,15 @@ class Store {
         id +=1 
         return id
     }
+    static readBook(id){
+        const myLibrary = Store.getBooks()
+        myLibrary.forEach((book, index)=>{
+            if(book.id == id){
+                book.readStatus = true;
+            }
+        })
+        localStorage.setItem('myLibrary', JSON.stringify(myLibrary))
+    }
 }
 class UI {
     createCard(book){
@@ -78,13 +87,18 @@ class UI {
         // Card Action Section
         const cardAction = document.createElement('div')
         cardAction.classList = 'card-action'
-        const readButton = document.createElement('a')
-        readButton.classList = "indigo-text readButton"
+        const readButton = document.createElement('button')
+        if (book.readStatus == true){
+            readButton.classList = ('indigo readButton btn disabled')
+        } else {
+            readButton.classList = ('indigo readButton btn')
+        }
         readButton.textContent = "Read"
+        readButton.addEventListener('click', UI.readBookUI)
         cardAction.append(readButton)
-        const deleteButton = document.createElement('a')
+        const deleteButton = document.createElement('button')
         deleteButton.textContent = "Delete"
-        deleteButton.classList = "red-text"
+        deleteButton.classList = "red-text btn-flat"
         deleteButton.href= "#"
         deleteButton.addEventListener('click', UI.deleteBookUI)
         cardAction.append(deleteButton)
@@ -93,13 +107,16 @@ class UI {
     } 
     static deleteBookUI(e){
         let id = e.target.parentNode.parentNode.dataset.id;
-        console.log(id)
-       e.target.parentNode.parentNode.remove()
+        e.target.parentNode.parentNode.remove()
         Store.deleteBook(id)
     }
+    static readBookUI(e){
+        let id = e.target.parentNode.parentNode.dataset.id;
+        Store.readBook(id)
+        e.target.classList.add('disabled')
+    }
+
 }
-
-
 const addBookToLibrary = () => {
     const title = document.querySelector('#title').value;
     const author = document.querySelector('#author').value;
