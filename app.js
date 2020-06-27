@@ -35,13 +35,11 @@ class Store {
         localStorage.setItem('myLibrary', JSON.stringify(myLibrary))
     }
 
-    static deleteBook(book){
-        alert('delete me')
-        let id = book.id;
+    static deleteBook(id){
         const myLibrary = Store.getBooks()
         myLibrary.forEach((book, index)=>{
-            if(book.id === id){
-                books.splice(index, 1)
+            if(book.id == id){
+                myLibrary.splice(index, 1)
             }
         })
         localStorage.setItem('myLibrary', JSON.stringify(myLibrary))
@@ -88,20 +86,19 @@ class UI {
         deleteButton.textContent = "Delete"
         deleteButton.classList = "red-text"
         deleteButton.href= "#"
-        deleteButton.addEventListener('click', Store.deleteBook)
+        deleteButton.addEventListener('click', UI.deleteBookUI)
         cardAction.append(deleteButton)
         card.appendChild(cardAction)
         document.querySelector('.container').appendChild(card)
     } 
-    static deleteBookUI(){
-      
+    static deleteBookUI(e){
+        let id = e.target.parentNode.parentNode.dataset.id;
+        console.log(id)
+       e.target.parentNode.parentNode.remove()
+        Store.deleteBook(id)
     }
 }
 
-
-const readBook = () =>{
-    
-}
 
 const addBookToLibrary = () => {
     const title = document.querySelector('#title').value;
