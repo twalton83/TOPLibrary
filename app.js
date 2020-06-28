@@ -127,6 +127,9 @@ const addBookToLibrary = () => {
     Store.addBookToLibrary(book)
     const ui = new UI()
     ui.createCard(book)
+    title.value = ""
+    author.value = ""
+    pages.value = ""
 }
 
 document.querySelector('.modal-close').addEventListener('click', addBookToLibrary)
