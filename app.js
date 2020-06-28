@@ -31,7 +31,7 @@ class Store {
 
     static addBookToLibrary(book){
         const myLibrary = Store.getBooks()
-        myLibrary.push(book)
+        myLibrary.unshift(book)
         localStorage.setItem('myLibrary', JSON.stringify(myLibrary))
     }
 
@@ -103,7 +103,8 @@ class UI {
         deleteButton.addEventListener('click', UI.deleteBookUI)
         cardAction.append(deleteButton)
         card.appendChild(cardAction)
-        document.querySelector('.container').appendChild(card)
+        //document.querySelector('.container').appendChild(card)
+        document.querySelector('.container').prepend(card)
     } 
     static deleteBookUI(e){
         let id = e.target.parentNode.parentNode.dataset.id;
